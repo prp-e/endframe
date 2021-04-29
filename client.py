@@ -7,7 +7,11 @@ import time
 directory = sys.argv[1]
 initial_list = os.listdir(directory) 
 
-s3_client = boto3.client('s3', endpoint_url = config.S3_ENDPOINT, aws_access_key_id = config.S3_ACCESS_KEY, aws_secret_access_key = config.S3_SECRET_KEY)
+s3_client = boto3.resource('s3', endpoint_url = config.S3_ENDPOINT, aws_access_key_id = config.S3_ACCESS_KEY, aws_secret_access_key = config.S3_SECRET_KEY)
+mybucket = s3_client.Bucket(config.S3_BUCKET_NAME)
+
+for obj in mybucket.objects.all():
+    print(obj.key)
 
 while True:
     temp_list = os.listdir(directory)
