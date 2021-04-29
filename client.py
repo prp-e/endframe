@@ -5,6 +5,8 @@ import sys
 import time
 
 directory = sys.argv[1]
+directory = os.path.abspath(directory)
+print(directory)
 initial_list = os.listdir(directory) 
 cloud_list = []
 
@@ -24,7 +26,8 @@ while True:
         if item not in initial_list:
             """ Synchronizing with the cloud, downloading the file """ 
             print(f"{item} is on the cloud, but not on the local filesystem.")
-            response = s3_client_secondary.download_file(config.S3_BUCKET_NAME, item, item)
+            with open(directory + '/' + item, 'wb') as f: 
+                s3_client_secondary.download_fileobj(config.S3_BUCKET_NAME, item, f)
             print(f"{item} downloaded successfully.")
     
     for item in initial_list:
