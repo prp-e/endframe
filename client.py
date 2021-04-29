@@ -14,7 +14,7 @@ while True:
             initial_list.append(item)
             print("Database updated successfully.")
         """ File deletion detection """
-        if item in initial_list and not in temp_list:
+        if item in initial_list and item not in temp_list:
             print(f"Deletion of {item} detected.")
             initial_list.remove(item)
             print("Database updated successfully")
