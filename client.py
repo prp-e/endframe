@@ -11,10 +11,12 @@ cloud_list = []
 s3_client = boto3.resource('s3', endpoint_url = config.S3_ENDPOINT, aws_access_key_id = config.S3_ACCESS_KEY, aws_secret_access_key = config.S3_SECRET_KEY)
 mybucket = s3_client.Bucket(config.S3_BUCKET_NAME)
 
-for obj in mybucket.objects.all():
-    cloud_list.append(obj.key)
-
 while True:
+    """ Messing around with the cloud """
+    temp_cloud_list = mybucket.objects.all()
+    for obj in temp_cloud_list:
+        cloud_list.append(obj.key)
+    
     temp_list = os.listdir(directory)
     for item in temp_list:
         if item not in initial_list:
