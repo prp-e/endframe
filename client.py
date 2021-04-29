@@ -15,6 +15,8 @@ mybucket = s3_client.Bucket(config.S3_BUCKET_NAME)
 while True:
     """ Messing around with the cloud """
     temp_cloud_list = mybucket.objects.all()
+    temp_list = os.listdir(directory)
+    
     for obj in temp_cloud_list:
         cloud_list.append(obj.key)
 
@@ -22,8 +24,9 @@ while True:
         if item not in initial_list:
             """ Synchronizing with the cloud, downloading the file """ 
             print(f"{item} is on the cloud, but not on the local filesystem.")
+            s3_client_secondary.download_file(config.S3_BUCKET_NAME, item, item)
+            print(f"{item} downloaded successfully.")
 
-    temp_list = os.listdir(directory)
     for item in temp_list:
         if item not in initial_list:
             """ File addition detection """ 
