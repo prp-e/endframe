@@ -1,9 +1,15 @@
+import boto3
+import config
 import os
 import sys 
 import time
 
 directory = sys.argv[1]
-initial_list = os.listdir(directory)
+initial_list = os.listdir(directory) 
+
+s3_client = boto3.client('s3', endpoint_url = config.S3_ENDPOINT, aws_access_key_id = config.S3_ACCESS_KEY, aws_secret_access_key = config.S3_SECRET_KEY)
+buckets = s3_client.list_buckets()
+print(buckets)
 
 while True:
     temp_list = os.listdir(directory)
